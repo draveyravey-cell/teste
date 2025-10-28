@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot Empresarial</title>
+    <style>
+        .chat-container {
+            width: 350px;
+            height: 500px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .chat-box {
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .bot {
+            background: #e3f2fd;
+            margin-right: 20%;
+        }
+
+        .user {
+            background: #f5f5f5;
+            margin-left: 20%;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chatBox"></div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Digite sua mensagem...">
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        const responses = {
+            greeting: ["Olá! Como posso ajudar você hoje?", "Bem-vindo! Sou o assistente virtual para soluções em bots."],
+            pricing: ["Nossos preços começam a partir de R$500/mês. Gostaria de conhecer os planos?", "Temos diferentes pacotes adaptados às suas necessidades. Posso te mostrar as opções?"],
+            features: ["Nossos bots oferecem: \n- Atendimento 24/7\n- Integração com WhatsApp\n- Respostas personalizadas\n- Análise de dados"],
+            default: ["Desculpe, não entendi. Pode reformular?", "Pode explicar melhor sua necessidade?"]
+        };
+
+        function addMessage(message, isBot) {
+            const chatBox = document.getElementById('chatBox');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isBot ? 'bot' : 'user'}`;
+            messageDiv.textContent = message;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function processMessage(message) {
+            message = message.toLowerCase();
+            if (message.includes('olá') || message.includes('oi')) {
+                return responses.greeting[Math.floor(Math.random() * responses.greeting.length)];
+            } else if (message.includes('preço') || message.includes('valor') || message.includes('custo')) {
+                return responses.pricing[Math.floor(Math.random() * responses.pricing.length)];
+            } else if (message.includes('funcionalidade') || message.includes('recurso')) {
+                return responses.features[0];
+            }
+            return responses.default[Math.floor(Math.random() * responses.default.length)];
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                addMessage(message, false);
+                input.value = '';
+                
+                setTimeout(() => {
+                    const response = processMessage(message);
+                    addMessage(response, true);
+                }, 500);
+            }
+        }
+
+        // Iniciar chat com mensagem de boas-vindas
+        window.onload = () => {
+            addMessage("Olá! Sou o assistente virtual especializado em soluções de bots para empresas. Como posso ajudar?", true);
+        };
+
+        // Enviar mensagem com Enter
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
