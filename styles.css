@@ -1,0 +1,38 @@
+.message {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    max-width: 80%;
+}
+
+.bot-message {
+    background-color: #f3f4f6;
+    margin-right: auto;
+}
+
+.user-message {
+    background-color: #dbeafe;
+    margin-left: auto;
+}
+
+.typing-indicator {
+    display: inline-block;
+    padding: 1rem;
+    background-color: #f3f4f6;
+    border-radius: 0.5rem;
+}
+
+.typing-indicator span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #6b7280;
+    border-radius: 50%;
+    margin: 0 2px;
+    animation: bounce 1.4s infinite ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+}
